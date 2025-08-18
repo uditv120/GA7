@@ -1,0 +1,16 @@
+{
+  "name": "marp-docs-presentation",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Product documentation presentation built with Marp",
+  "scripts": {
+    "start": "marp -s presentation",
+    "build": "marp presentation/slides.md -o dist/slides.html",
+    "pdf": "marp presentation/slides.md --pdf --allow-local-files",
+    "pptx": "marp presentation/slides.md --pptx",
+    "images": "marp presentation/slides.md --images png -o dist/images"
+  },
+  "devDependencies": {
+    "@marp-team/marp-cli": "^3.9.0"
+  }
+}
