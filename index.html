@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Quarterly Earnings - Interactive RevealJS Deck</title>
+
+    <!-- RevealJS core & theme via CDN (works on GitHub Pages) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/white.css" id="theme">
+
+    <!-- Syntax highlighting theme -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css">
+
+    <style>
+      :root {
+        /* responsive font size for better readability on large screens */
+        --r-main-font-size: calc(0.55vw + 0.55vh + 0.55vmin);
+      }
+      .chart { width: 100%; height: calc(100vh - 220px); }
+      .r-fit { width: 100%; }
+      .brand { color: #0d47a1; }
+      .kpi { font-size: 1.6em; font-weight: 700; }
+    </style>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <!-- Title slide with email -->
+        <section>
+          <h1>Quarterly Earnings Report</h1>
+          <p class="brand">Financial Technology Division</p>
+          <p>Prepared by: 22f3002257@ds.study.iitm.ac.in</p>
+          <aside class="notes">
+            Welcome stakeholders. We will cover revenue, margins, segment performance, and outlook. Use S to view these presenter notes.
+          </aside>
+        </section>
+
+        <!-- Markdown slide (at least one) -->
+        <section data-markdown>
+          <textarea data-template>
+## Highlights (Markdown)
+
+- Revenue growth: **+12.4% YoY**
+- Operating margin: **18.1%**
+- Free cash flow conversion: **92%**
+- Outlook: *Cautiously optimistic*
+
+---
+
+## Segment KPIs (Markdown)
+
+- Retail Banking: NIM up 35 bps
+- Corporate: Loan book +9%
+- Payments: TPV +14%
+- Wealth: Net inflows +11%
+          </textarea>
+          <aside class="notes">Use this slide to speak to topline metrics and KPI momentum.</aside>
+        </section>
+
+        <!-- Animated elements using fragments -->
+        <section>
+          <h2>Drivers of Performance</h2>
+          <ul>
+            <li class="fragment">Deposit repricing and mix shift</li>
+            <li class="fragment">Credit growth in secured portfolios</li>
+            <li class="fragment fade-up">Operating leverage from tech investments</li>
+            <li class="fragment fade-in-then-semi-out">Prudent risk normalization</li>
+          </ul>
+          <aside class="notes">Reveal bullet points gradually; pause after each to add commentary.</aside>
+        </section>
+
+        <!-- Code sample with syntax highlighting and line highlights -->
+        <section>
+          <h2>Risk Model Snippet (Python)</h2>
+          <pre><code class="language-python" data-line-numbers="1-2|4,6-7|9">
+import pandas as pd
+import numpy as np
+
+# Probability of Default (toy example)
+def pd_logit(x):
+    beta = np.array([ -2.1, 0.8, 1.2 ])
+    z = beta @ x
+    return 1 / (1 + np.exp(-z))
+
+x = np.array([1.0, 0.3, 0.1])
+print(pd_logit(x))
+          </code></pre>
+          <aside class="notes">Use arrows to step through the code; highlight lines explain logistic transform intuition.</aside>
+        </section>
+
+        <!-- Math (financial formulas) -->
+        <section>
+          <h2>Financial Math</h2>
+          <p>Discounted Cash Flow (DCF):</p>
+          <p>\[ NPV = \sum_{t=1}^{T} \frac{CF_t}{(1 + r)^t} \]</p>
+          <p>Sharpe Ratio:</p>
+          <p>\[ \text{Sharpe} = \frac{E[R_p - R_f]}{\sigma_p} \]</p>
+          <aside class="notes">Briefly define discount rate r, cash flows CF_t, and the interpretation of Sharpe.</aside>
+        </section>
+
+        <!-- Simple interactive example with event hook and fragments -->
+        <section id="chart-slide">
+          <h2>Revenue Trend (Demo)</h2>
+          <div id="chart" class="chart"></div>
+          <p class="fragment">Q/Q growth stabilized in H2.</p>
+          <aside class="notes">The chart initializes when this slide is shown. Use this to discuss trend inflection.</aside>
+        </section>
+
+        <!-- Speaker notes example -->
+        <section>
+          <h2>Outlook and Risks</h2>
+          <p>Base case: mid-teens growth; risk-weighted optimization continues.</p>
+          <aside class="notes">Call out macro risks: rates path, credit cycle, regulatory changes. End with guidance.</aside>
+        </section>
+      </div>
+    </div>
+
+    <!-- Reveal core -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.js"></script>
+    <!-- Official plugins -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/highlight/highlight.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/math/math.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/notes/notes.js"></script>
+
+    <!-- Lightweight chart demo using SVG to avoid extra deps -->
+    <script>
+      function tinyChart(el, series) {
+        const w = el.clientWidth || 800, h = el.clientHeight || 300, p = 24;
+        const svgNS = 'http://www.w3.org/2000/svg';
+        const svg = document.createElementNS(svgNS, 'svg');
+        svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+        svg.style.width = '100%'; svg.style.height = '100%';
+        const min = Math.min(...series), max = Math.max(...series);
+        const x = i => p + i * ( (w - 2*p) / (series.length - 1) );
+        const y = v => h - p - ( (v - min) / (max - min || 1) ) * (h - 2*p);
+        let d = '';
+        series.forEach((v, i) => { d += (i ? ' L' : 'M') + x(i) + ' ' + y(v); });
+        const path = document.createElementNS(svgNS, 'path');
+        path.setAttribute('d', d);
+        path.setAttribute('fill', 'none');
+        path.setAttribute('stroke', '#0d47a1');
+        path.setAttribute('stroke-width', '3');
+        svg.appendChild(path);
+        el.innerHTML = ''; el.appendChild(svg);
+      }
+
+      Reveal.initialize({
+        width: 1280,
+        height: 720,
+        margin: 0.04,
+        controls: true,
+        progress: true,
+        history: true,
+        transition: 'slide',
+        plugins: [ RevealMarkdown, RevealHighlight, RevealMath, RevealNotes ]
+      });
+
+      Reveal.on('slidechanged', (event) => {
+        if (event.currentSlide && event.currentSlide.id === 'chart-slide') {
+          const el = document.getElementById('chart');
+          if (el && !el.dataset.rendered) {
+            tinyChart(el, [120, 128, 130, 140, 138, 145, 150, 152, 155, 160]);
+            el.dataset.rendered = '1';
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
