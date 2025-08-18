@@ -1,0 +1,36 @@
+/* Custom Marp theme - load with `--theme-set presentation/themes/custom.css` and use `theme: custom` */
+@charset "UTF-8";
+
+@import 'default';
+
+:root {
+  --brand-bg: #0f172a;       /* slate-900 */
+  --brand-fg: #e2e8f0;       /* slate-200 */
+  --brand-accent: #38bdf8;   /* sky-400 */
+  --code-bg: #0b1020;
+}
+
+section {
+  background: var(--brand-bg);
+  color: var(--brand-fg);
+  font-size: calc(1.0vw + 1.0vh + 6px);
+}
+
+h1, h2, h3 {
+  color: var(--brand-accent);
+}
+
+blockquote {
+  border-left: 0.25rem solid var(--brand-accent);
+  padding-left: 1rem;
+  opacity: .9;
+}
+
+code, pre {
+  background: var(--code-bg);
+  color: #f8fafc;
+}
+
+section.footerless::after {
+  content: none !important;
+}
