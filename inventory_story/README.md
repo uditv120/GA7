@@ -51,3 +51,5 @@ Next steps to create a Pull Request:
 2) Open a PR titled "Retail Inventory Turnover Analysis (LLM-assisted)" including this README, code, and charts.
 3) Ensure the PR description references LLM assistance and includes the contact email above for verification.
 
+
+added new outputs for pr
