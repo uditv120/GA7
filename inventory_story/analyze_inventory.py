@@ -9,7 +9,7 @@ OUTPUT_DIR = Path(__file__).parent / "outputs"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 INDUSTRY_TARGET = 8.0
-
+#Error: No data analysis file (.py, .R, .ipynb) found in the PR files
 
 def load_data(path: Path) -> pd.DataFrame:
     df = pd.read_csv(path)
@@ -97,3 +97,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
