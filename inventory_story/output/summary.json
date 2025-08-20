@@ -1,0 +1,19 @@
+{
+  "average":5.68,
+  "gap_to_target":2.32,
+  "below_target_quarters":[
+    "Q1",
+    "Q2",
+    "Q3"
+  ],
+  "min":{
+    "quarter":"Q3",
+    "value":2.8
+  },
+  "max":{
+    "quarter":"Q4",
+    "value":10.6
+  },
+  "trend_chart":"d:\\tds\\inventory_story\\outputs\\turnover_trend.png",
+  "bars_chart":"d:\\tds\\inventory_story\\outputs\\turnover_bars.png"
+}
